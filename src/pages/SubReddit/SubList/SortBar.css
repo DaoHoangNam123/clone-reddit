@@ -1,0 +1,24 @@
+#sort-bar button#sort-btn.default {
+  background-color: #f6f7f8;
+}
+#sort-bar button#sort-btn.default span {
+  color:  #8bb3c8;
+}
+#sort-bar button#sort-btn span
+{
+    color: #878a8c ;
+}
+#sort-bar button#sort-btn.active, #sort-bar button#sort-btn.active span {
+  background-color: #e5e6e7;
+  color:  #8bb3c8;
+    transition: all 0.3s;
+}
+#sort-bar button#sort-btn:hover 
+{
+    background-color: #e5e6e7;
+    transition: all 0.3s;
+}
+#sort-bar button#sort-btn#active
+{
+    background-color: #e5e6e7;
+}

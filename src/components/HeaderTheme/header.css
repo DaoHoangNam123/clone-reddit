@@ -1,0 +1,35 @@
+.anticon-down {
+  display: block;
+}
+.ant-space-item {
+  color: black;
+}
+.anticon-shopping-cart {
+  font-size: 25px;
+  transition: 0.3s;
+  font-weight: 700;
+}
+.anticon-shopping-cart:hover {
+  color: #5624d0;
+}
+.anticon-search {
+  font-size: 18px;
+  color: gray;
+}
+.ant-space-item {
+  font-size: 14px;
+  transition: 0.3s;
+}
+.ant-space-item:hover {
+  color: #5624d0;
+}
+.anticon-global {
+  padding-bottom: 0px;
+}
+header {
+  box-shadow: rgba(100, 100, 111, 0.3) 0px 7px 29px 0px;
+}
+.anticon-right {
+  padding-top: 2px;
+  font-weight: 100;
+}
