@@ -1,0 +1,17 @@
+.ant-carousel .slick-list .slick-slide > div > div {
+    display: flex !important;
+}
+.ant-carousel .slick-dots li.slick-active button
+{
+    width: 15px;
+    height: 15px;
+    background-color: #ff4501; 
+    border-radius: 100%;
+}
+.ant-carousel .slick-dots li button
+{
+    width: 15px;
+    height: 15px;
+    background-color: gray;
+    border-radius: 100%;
+}

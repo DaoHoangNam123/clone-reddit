@@ -71,7 +71,10 @@ export default function SubList() {
     />
   );
   return (
-    <div className="py-5 mb-5" style={{ backgroundColor: "#eeeff1" }}>
+    <div
+      className="py-5 mb-5"
+      style={{ backgroundColor: "#eeeff1", minHeight: "100vh" }}
+    >
       <div className="container rounded border-gray-300 border mx-auto w-2/3 bg-white p-5 ">
         <div id="sort-bar" className="flex justify-between items-center">
           <div className="flex justify-start items-center">

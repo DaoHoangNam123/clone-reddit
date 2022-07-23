@@ -1,6 +1,8 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./Banner.css";
 export default function SubBanner() {
+  let navigate = useNavigate();
   return (
     <div>
       <div id="banner" className="h-48"></div>
@@ -16,7 +18,14 @@ export default function SubBanner() {
           />
         </div>
         <div className="flex justify-start items-center">
-          <h1 className="text-3xl font-bold mb-0">Dota 2 on Reddit</h1>
+          <h1
+            className="text-3xl font-bold mb-0 cursor-pointer"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            Dota 2 on Reddit
+          </h1>
           <button
             className="rounded-3xl text-white font-bold w-24 h-10 mx-5"
             style={{ backgroundColor: "#8bb3c8" }}

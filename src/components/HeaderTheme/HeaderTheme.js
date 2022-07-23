@@ -8,7 +8,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { DownOutlined, SmileOutlined } from "@ant-design/icons";
-import { Dropdown, Menu, Space, Input } from "antd";
+import { Dropdown, Menu, Space, Input, Tag } from "antd";
 import { NavLink } from "react-router-dom";
 const { Search } = Input;
 const menu = (
@@ -136,14 +136,17 @@ export default function HeaderTheme() {
           className=" flex hover:border-blue-500 border border-white rounded mr-5 h-12"
           style={{ width: "100%", backgroundColor: "#f6f7f8" }}
         >
-          <div className="pt-2 px-3">
+          <div className="py-2 px-3 flex justify-center items-center">
             <SearchOutlined />
+            <div>
+              <Tag color="orange">r/DotA2</Tag>
+            </div>
           </div>
           <input
             style={{ width: "90%", backgroundColor: "#f6f7f8" }}
             className="outline-none"
             type="text"
-            placeholder="Search for reddit"
+            placeholder="Search Reddit"
           />
         </div>
 

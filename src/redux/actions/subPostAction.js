@@ -1,8 +1,11 @@
 import {
+  DOWN_VOTE,
   GET_HOT,
   GET_NEW,
   GET_POST,
+  GET_THREAD,
   GET_TOP,
+  UP_VOTE,
 } from "../constants/RedditConstant";
 
 export const getHotPost = () => {
@@ -29,6 +32,32 @@ export const getPost = (page, list) => {
     payload: {
       page: page,
       data: list,
+    },
+  };
+};
+export const getThread = (thread) => {
+  return {
+    type: GET_THREAD,
+    payload: {
+      data: thread,
+    },
+  };
+};
+export const upVote = (vote, id) => {
+  return {
+    type: UP_VOTE,
+    payload: {
+      vote: vote,
+      postId: id,
+    },
+  };
+};
+export const downVote = (vote, id) => {
+  return {
+    type: DOWN_VOTE,
+    payload: {
+      vote: vote,
+      postId: id,
     },
   };
 };

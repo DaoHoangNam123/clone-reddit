@@ -33,3 +33,9 @@ header {
   padding-top: 2px;
   font-weight: 100;
 }
+.ant-tag {
+  border-radius: 20px !important;
+  margin-left: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}

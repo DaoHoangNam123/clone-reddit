@@ -4,17 +4,17 @@
 #post-comment #fn-btn:hover {
    background-color: #e8e8e8;
 }
-#post-vote #upvote-btn {
+#post-vote .upvote-btn {
     color: #878a8c;
 }
-#post-vote #upvote-btn:hover {
+#post-vote .upvote-btn:hover {
     color: #dca594;
     background-color: #e8e8e8 ;
 }
-#post-vote #downvote-btn {
+#post-vote .downvote-btn {
     color: #878a8c;
 }
-#post-vote #downvote-btn:hover {
+#post-vote .downvote-btn:hover {
     color: #bac3dd;
     background-color: #e8e8e8 ;
 }
