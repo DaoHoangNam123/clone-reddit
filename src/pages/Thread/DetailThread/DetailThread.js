@@ -151,7 +151,7 @@ export default function DetailThread() {
           <div className="mx-2">
             <div>
               <span className="text-base font-bold">{thread.title}</span>
-              <Tag color="cyan">{post.link_flair_text}</Tag>
+              <Tag color="cyan">{thread.link_flair_text}</Tag>
             </div>
           </div>
         </div>
@@ -231,7 +231,7 @@ export default function DetailThread() {
                 <div>
                   <div className="font-medium text-lg text-left">
                     <span>{thread.title}</span>
-                    <Tag color="cyan">{post.link_flair_text}</Tag>
+                    <Tag color="cyan">{thread.link_flair_text}</Tag>
                   </div>
                 </div>
                 <div>
