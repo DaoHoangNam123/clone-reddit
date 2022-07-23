@@ -8,7 +8,7 @@ import {
   EyeInvisibleOutlined,
   FlagOutlined,
 } from "@ant-design/icons";
-import { Carousel } from "antd";
+import { Carousel, Tag } from "antd";
 import { NavLink, useParams } from "react-router-dom";
 import { threadService } from "../../../services/threadPostService";
 import { useDispatch, useSelector } from "react-redux";
@@ -151,6 +151,7 @@ export default function DetailThread() {
           <div className="mx-2">
             <div>
               <span className="text-base font-bold">{thread.title}</span>
+              <Tag color="cyan">{post.link_flair_text}</Tag>
             </div>
           </div>
         </div>
@@ -230,6 +231,7 @@ export default function DetailThread() {
                 <div>
                   <div className="font-medium text-lg text-left">
                     <span>{thread.title}</span>
+                    <Tag color="cyan">{post.link_flair_text}</Tag>
                   </div>
                 </div>
                 <div>
