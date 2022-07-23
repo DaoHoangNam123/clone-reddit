@@ -81,7 +81,7 @@ export default function HeaderTheme() {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            className="w-10"
+            className="w-10 h-12"
           >
             <g>
               <circle fill="#FF4500" cx="10" cy="10" r="10"></circle>
@@ -92,7 +92,7 @@ export default function HeaderTheme() {
             </g>
           </svg>
           <svg
-            className=" w-16 mx-2"
+            className=" w-16 mx-2 h-12"
             viewBox="0 0 57 18"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -152,7 +152,7 @@ export default function HeaderTheme() {
         </div>
 
         <div className="  items-center justify-evenly w-full hidden lg:flex">
-          <div className=" flex gap-1">
+          <div className=" flex gap-1 justify-center items-center">
             <NavLink to={"/login"}>
               <div
                 className=" px-4 py-2 rounded-3xl w-32 font-bold cursor-pointer hover:bg-blue-50 duration-150 text-blue"
