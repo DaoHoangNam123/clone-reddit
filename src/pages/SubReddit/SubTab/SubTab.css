@@ -19,3 +19,12 @@
     margin-right: auto;
     flex: none;
 }
+@media only screen and (max-width: 1024px) {
+    .ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap
+    {
+    width:90%;
+    margin-left: 10px;
+    margin-right: 10px;
+    flex: none;
+        }
+  }

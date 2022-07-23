@@ -40,6 +40,42 @@ export default function SubList() {
       });
     });
   }, []);
+  const tabmenu = (
+    <Menu
+      items={[
+        {
+          label: (
+            <button
+              id="sort-btn"
+              className="flex rounded-2xl justify-center items-center py-1 px-4 mx-2"
+              onClick={(event) => {
+                dispatch(getNewPost());
+              }}
+            >
+              <HeartOutlined style={{ fontSize: "20px" }} />
+              <span className="mx-1 text-base font-bold">New</span>
+            </button>
+          ),
+          key: "0",
+        },
+        {
+          label: (
+            <button
+              id="sort-btn"
+              className="flex rounded-2xl justify-center items-center py-1 px-4 mx-2"
+              onClick={(event) => {
+                dispatch(getTopPost());
+              }}
+            >
+              <RocketOutlined style={{ fontSize: "20px" }} />
+              <span className="mx-1 text-base font-bold">Top</span>
+            </button>
+          ),
+          key: "1",
+        },
+      ]}
+    />
+  );
   const menu = (
     <Menu
       items={[
@@ -75,7 +111,7 @@ export default function SubList() {
       className="py-5 mb-5"
       style={{ backgroundColor: "#eeeff1", minHeight: "100vh" }}
     >
-      <div className="container rounded border-gray-300 border mx-auto w-2/3 bg-white p-5 ">
+      <div className="hidden lg:block container rounded border-gray-300 border mx-auto lg:w-2/3 bg-white p-5 ">
         <div id="sort-bar" className="flex justify-between items-center">
           <div className="flex justify-start items-center">
             <button
@@ -117,6 +153,34 @@ export default function SubList() {
           </div>
           <div>
             <Dropdown overlay={menu} trigger={["click"]}>
+              <button
+                id="sort-btn"
+                className="flex rounded-2xl justify-center items-center py-1 px-1"
+              >
+                <MenuFoldOutlined
+                  style={{ fontSize: "20px" }}
+                  className="mx-2"
+                />
+                <DownOutlined />
+              </button>
+            </Dropdown>
+          </div>
+        </div>
+      </div>
+      <div className="container rounded border-gray-300 border mx-auto lg:hidden lg:w-2/3 bg-white p-5 ">
+        <div id="sort-bar" className="flex justify-between items-center">
+          <button
+            id="sort-btn"
+            className="flex rounded-2xl justify-center items-center py-1 px-4 default"
+            onClick={() => {
+              dispatch(getHotPost());
+            }}
+          >
+            <FireOutlined style={{ fontSize: "20px" }} />
+            <span className="mx-1 text-base font-bold">Hot</span>
+          </button>
+          <div>
+            <Dropdown overlay={tabmenu} trigger={["click"]}>
               <button
                 id="sort-btn"
                 className="flex rounded-2xl justify-center items-center py-1 px-1"

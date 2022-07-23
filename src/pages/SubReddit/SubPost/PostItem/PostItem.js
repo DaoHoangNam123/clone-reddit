@@ -65,7 +65,7 @@ export default function PostItem({ postData }) {
     } else if (post.is_reddit_media_domain && post.is_robot_indexable) {
       return (
         <div className="flex justify-center items-center">
-          <img src={post.url} alt="reddit image"></img>
+          <img src={post.url} alt="reddit image" style={{ width: "80%" }}></img>
         </div>
       );
     } else if (post.is_self) {
@@ -73,7 +73,7 @@ export default function PostItem({ postData }) {
       if (el !== null) {
         let html = he.decode(post.selftext_html);
         let newEl = `<div
-        class="text-left text-ellipsis"
+        class="text-left text-ellipsis overflow-hidden"
       >${html}</div>`;
         el.innerHTML = newEl;
       }
@@ -89,7 +89,7 @@ export default function PostItem({ postData }) {
                 <img
                   src={he.decode(item.s.u)}
                   alt="gallery image"
-                  style={{ width: "500px", height: "auto" }}
+                  style={{ width: "400px", height: "auto" }}
                 ></img>
               </div>
             );
@@ -121,7 +121,7 @@ export default function PostItem({ postData }) {
         return (
           <div
             key={index}
-            className="flex justify-start items-start hover:border-gray-500 border border-white bg-white pt-2 px-2 my-3 rounded"
+            className="flex justify-start items-start hover:border-gray-500 border border-white bg-white pt-2  pl-2 pr-5 my-3 rounded"
           >
             <div style={{ backgroundColor: "#fcfcfc" }} id="post-vote">
               <div>
@@ -155,7 +155,7 @@ export default function PostItem({ postData }) {
               </div>
             </div>
             <div
-              className="px-2 container"
+              className="px-2 container w-full"
               style={{ width: "100%" }}
               id="post-header"
               onClick={() => {
@@ -198,7 +198,7 @@ export default function PostItem({ postData }) {
               </div>
               <div>
                 <div>
-                  <div id={post.id} className="">
+                  <div id={post.id} className="overflow-hidden">
                     {post.crosspost_parent_list
                       ? renderPost(post.crosspost_parent_list[0])
                       : renderPost(post)}

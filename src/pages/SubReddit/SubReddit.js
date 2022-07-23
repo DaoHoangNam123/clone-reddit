@@ -6,7 +6,7 @@ export default function SubReddit() {
   return (
     <div id="scrollableDiv">
       <SubBanner />
-      <div id="banner-tab">
+      <div>
         <SubTab />
       </div>
     </div>

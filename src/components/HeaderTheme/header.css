@@ -39,3 +39,7 @@ header {
   padding-top: 2px;
   padding-bottom: 2px;
 }
+.ant-drawer-content-wrapper
+{
+  width: 240px !important;
+}

@@ -10,6 +10,7 @@ import {
 import { DownOutlined, SmileOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Space, Input, Tag } from "antd";
 import { NavLink } from "react-router-dom";
+import HeaderDrawer from "./Drawer/HeaderDrawer";
 const { Search } = Input;
 const menu = (
   <Menu
@@ -75,7 +76,7 @@ export default function HeaderTheme() {
   const onSearch = (value) => console.log(value);
   return (
     <header className="w-full py-1 fixed top-0 bg-white z-10">
-      <div className=" flex items-center w-full px-4">
+      <div className=" flex items-center w-full">
         <NavLink to={"/"} className="flex">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -107,7 +108,7 @@ export default function HeaderTheme() {
           </svg>
         </NavLink>
         <div
-          className="p-2 hover:border-gray-300 border border-white hover:rounded mx-2"
+          className="p-2 hover:border-gray-300 border border-white hover:rounded mx-2 hidden lg:block"
           style={{ width: "40%" }}
         >
           <Dropdown overlay={menu} trigger={["click"]}>
@@ -150,7 +151,7 @@ export default function HeaderTheme() {
           />
         </div>
 
-        <div className=" flex items-center justify-evenly w-full">
+        <div className="  items-center justify-evenly w-full hidden lg:flex">
           <div className=" flex gap-1">
             <NavLink to={"/login"}>
               <div
@@ -179,6 +180,9 @@ export default function HeaderTheme() {
               </Dropdown>
             </div>
           </div>
+        </div>
+        <div className="lg:hidden">
+          <HeaderDrawer />
         </div>
       </div>
     </header>

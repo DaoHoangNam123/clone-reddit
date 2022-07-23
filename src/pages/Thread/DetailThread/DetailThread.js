@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   CaretUpOutlined,
   CaretDownOutlined,
@@ -21,7 +21,8 @@ import he from "he";
 import ReactPlayer from "react-player";
 import ReactHlsPlayer from "react-hls-player";
 export default function DetailThread() {
-  const thread = useSelector((state) => state.subReducer.threadData);
+  const threadData = useSelector((state) => state.subReducer.threadData);
+  const [thread, setThread] = useState({});
   const getTime = (time) => {
     const postHour = new Date(time * 1000);
     const currentHour = new Date();
@@ -51,6 +52,7 @@ export default function DetailThread() {
     let fetchData = async () => {
       let result = await threadService.getThread(`${id.id}/${id.title}`);
       dispatch(getThread(result.data[0].data.children[0].data));
+      setThread(result.data[0].data.children[0].data);
     };
     fetchData();
   }, []);
@@ -67,14 +69,25 @@ export default function DetailThread() {
           />
         </div>
       );
-    } else if (post.is_reddit_media_domain && post.is_robot_indexable) {
-      return <img src={post.url} alt="reddit image"></img>;
+    } else if (
+      post.is_reddit_media_domain &&
+      post.is_robot_indexable &&
+      !post.is_self
+    ) {
+      console.log("here");
+      console.log(post);
+      return (
+        <div className={`${post.id}`}>
+          <img src={post.url} alt={`${post.id} reddit`}></img>;
+        </div>
+      );
     } else if (post.is_self) {
+      console.log("there");
       let el = document.getElementById("description");
       if (el !== null) {
         let html = he.decode(post.selftext_html);
         let newEl = `<div
-          class="text-left text-ellipsis"
+          class="text-left text-ellipsis overflow-hidden"
         >${html}</div>`;
         el.innerHTML = newEl;
       }
@@ -89,8 +102,8 @@ export default function DetailThread() {
               <div key={index} className="justify-center items-center">
                 <img
                   src={he.decode(item.s.u)}
-                  alt="gallery image"
-                  style={{ width: "500px", height: "auto" }}
+                  alt="gallery"
+                  style={{ width: "400px", height: "auto" }}
                 ></img>
               </div>
             );
@@ -119,13 +132,13 @@ export default function DetailThread() {
 
   return (
     <div>
-      <div id="thread-header" className="bg-black text-white h-10">
-        <div className="container w-2/3 mx-auto flex justify-start items-center h-full">
+      <div id="thread-header" className="bg-black text-white h-max">
+        <div className="container lg:w-2/3 w-full mx-auto flex justify-start items-center py-2">
           <div className="flex justify-start items-center">
             <button
               className="rounded upvote-btn"
               onClick={() => {
-                dispatch(upVote(thread.score, thread.id));
+                dispatch(upVote(threadData.score, thread.id));
               }}
             >
               <span>
@@ -134,13 +147,13 @@ export default function DetailThread() {
             </button>
             <div className="mx-2">
               <span className="font-bold mb-0 text-xs">
-                {calVote(thread.score)}
+                {calVote(threadData.score)}
               </span>
             </div>
             <button
               className="rounded downvote-btn"
               onClick={() => {
-                dispatch(downVote(thread.score, thread.id));
+                dispatch(downVote(threadData.score, thread.id));
               }}
             >
               <span>
@@ -148,9 +161,11 @@ export default function DetailThread() {
               </span>
             </button>
           </div>
-          <div className="mx-2">
-            <div>
-              <span className="text-base font-bold">{thread.title}</span>
+          <div className="mx-4">
+            <div className="flex justify-center items-start w-full">
+              <span className="text-base font-bold text-left">
+                {thread.title}
+              </span>
               <Tag color="cyan">{thread.link_flair_text}</Tag>
             </div>
           </div>
@@ -158,12 +173,12 @@ export default function DetailThread() {
       </div>
       <div id="thread-body">
         <div
-          className="py-5 mb-5"
+          className="lg:py-5 py-2 mb-5"
           style={{ backgroundColor: "#eeeff1", minHeight: "100vh" }}
         >
           <div
             id="thread-content"
-            className="rounded border-gray-300 mx-auto w-2/3 bg-white"
+            className="rounded border-gray-300 mx-auto lg:w-2/3 w-full bg-white"
           >
             <div className="flex justify-start items-star bg-white p-2 my-3 rounded">
               <div id="post-vote">
@@ -171,7 +186,7 @@ export default function DetailThread() {
                   <button
                     className="rounded upvote-btn"
                     onClick={() => {
-                      dispatch(upVote(thread.score, thread.id));
+                      dispatch(upVote(threadData.score, thread.id));
                     }}
                   >
                     <span>
@@ -180,13 +195,13 @@ export default function DetailThread() {
                   </button>
                   <div>
                     <span className="font-bold mb-0 text-xs">
-                      {calVote(thread.score)}
+                      {calVote(threadData.score)}
                     </span>
                   </div>
                   <button
                     className="rounded downvote-btn"
                     onClick={() => {
-                      dispatch(downVote(thread.score, thread.id));
+                      dispatch(downVote(threadData.score, thread.id));
                     }}
                   >
                     <span>
@@ -201,35 +216,29 @@ export default function DetailThread() {
                 id="post-header"
               >
                 <div
-                  className="flex justify-start items-center text-sm"
+                  className="text-sm w-full text-left"
                   style={{ color: "#b0b1b3" }}
                 >
-                  <div>
-                    <span>Posted by</span>
-                  </div>
-                  <div>
-                    <a
-                      className="mx-1 hover:underline"
-                      href="/"
-                      style={{ color: "#b0b1b3" }}
-                    >
-                      post author u/{thread.author}
-                    </a>
-                  </div>
-                  <div>
-                    <span>
-                      {" "}
-                      {getTime(thread.created_utc).hour !== "0"
-                        ? getTime(thread.created_utc).hour > 24
-                          ? (getTime(thread.created_utc).hour / 24).toFixed(0) +
-                            " days ago"
-                          : getTime(thread.created_utc).hour + " hours ago"
-                        : getTime(thread.created_utc).minute + " minutes ago"}
-                    </span>
-                  </div>
+                  <span>Posted by</span>
+                  <a
+                    className="mx-1 hover:underline"
+                    href="/"
+                    style={{ color: "#b0b1b3" }}
+                  >
+                    u/{thread.author}
+                  </a>
+                  <span>
+                    {" "}
+                    {getTime(thread.created_utc).hour !== "0"
+                      ? getTime(thread.created_utc).hour > 24
+                        ? (getTime(thread.created_utc).hour / 24).toFixed(0) +
+                          " days ago"
+                        : getTime(thread.created_utc).hour + " hours ago"
+                      : getTime(thread.created_utc).minute + " minutes ago"}
+                  </span>
                 </div>
                 <div>
-                  <div className="font-medium text-lg text-left">
+                  <div className="font-medium text-lg text-left mb-2">
                     <span>{thread.title}</span>
                     <Tag color="cyan">{thread.link_flair_text}</Tag>
                   </div>
@@ -244,7 +253,7 @@ export default function DetailThread() {
                   </div>
                 </div>
                 <div
-                  className=" flex justify-start items-center my-2"
+                  className=" grid grid-cols-3 sm:flex justify-start items-center my-2"
                   id="post-comment"
                 >
                   <button id="fn-btn" className="py-2 px-2 rounded">
@@ -281,21 +290,21 @@ export default function DetailThread() {
                   </button>
                 </div>
                 <div className="rounded border-gray-300 border py-4 px-3">
-                  <div className="flex justify-between items-center">
+                  <div className="flex flex-col md:flex-row justify-between items-center">
                     <div>
                       <span> What are your thoughts? Log in or Sign up</span>
                     </div>
                     <div className="flex justify-center items-center">
                       <NavLink to={"/login"}>
                         <div
-                          className=" px-4 py-2 rounded-3xl w-32 font-bold cursor-pointer hover:bg-blue-50 duration-150 text-blue"
+                          className=" px-4 py-2 rounded-3xl w-20 text-sm lg:w-32 font-bold cursor-pointer hover:bg-blue-50 duration-150 text-blue"
                           style={{ border: "1px solid #509cdf" }}
                         >
                           Log in
                         </div>
                       </NavLink>
                       <NavLink to={"/register"}>
-                        <div className=" px-4 py-2 mx-4 rounded-3xl w-32 font-bold bg-blue-600 hover:bg-blue-500 text-white cursor-pointer">
+                        <div className=" px-2 lg:px-4  py-2 mx-4 rounded-3xl w-20 text-sm lg:w-32 font-bold bg-blue-600 hover:bg-blue-500 text-white cursor-pointer">
                           Sign up
                         </div>
                       </NavLink>
