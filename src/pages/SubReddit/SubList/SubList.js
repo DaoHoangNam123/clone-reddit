@@ -111,7 +111,7 @@ export default function SubList() {
       className="py-5 mb-5"
       style={{ backgroundColor: "#eeeff1", minHeight: "100vh" }}
     >
-      <div className="hidden lg:block container rounded border-gray-300 border mx-auto lg:w-2/3 bg-white p-5 ">
+      <div className="hidden sm:block container rounded border-gray-300 border mx-auto sm:w-3/4 lg:w-2/3  bg-white p-5 ">
         <div id="sort-bar" className="flex justify-between items-center">
           <div className="flex justify-start items-center">
             <button
@@ -167,7 +167,7 @@ export default function SubList() {
           </div>
         </div>
       </div>
-      <div className="container rounded border-gray-300 border mx-auto lg:hidden lg:w-2/3 bg-white p-5 ">
+      <div className="container rounded border-gray-300 border mx-auto sm:hidden sm:w-3/4 lg:2/3 bg-white p-5 ">
         <div id="sort-bar" className="flex justify-between items-center">
           <button
             id="sort-btn"

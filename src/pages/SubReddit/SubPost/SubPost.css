@@ -1,7 +1,7 @@
-#post-comment #fn-btn span {
+#post-comment .fn-btn span {
     color: #878a8c;
 }
-#post-comment #fn-btn:hover {
+#post-comment .fn-btn:hover {
    background-color: #e8e8e8;
 }
 #post-vote .upvote-btn {

@@ -74,15 +74,12 @@ export default function DetailThread() {
       post.is_robot_indexable &&
       !post.is_self
     ) {
-      console.log("here");
-      console.log(post);
       return (
         <div className={`${post.id}`}>
           <img src={post.url} alt={`${post.id} reddit`}></img>;
         </div>
       );
     } else if (post.is_self) {
-      console.log("there");
       let el = document.getElementById("description");
       if (el !== null) {
         let html = he.decode(post.selftext_html);
@@ -162,7 +159,7 @@ export default function DetailThread() {
             </button>
           </div>
           <div className="mx-4">
-            <div className="flex justify-center items-start w-full">
+            <div className=" flex flex-col md:flex-row justify-center items-start w-full">
               <span className="text-base font-bold text-left">
                 {thread.title}
               </span>
@@ -253,10 +250,10 @@ export default function DetailThread() {
                   </div>
                 </div>
                 <div
-                  className=" grid grid-cols-3 sm:flex justify-start items-center my-2"
+                  className=" flex flex-wrap justify-start items-center my-2"
                   id="post-comment"
                 >
-                  <button id="fn-btn" className="py-2 px-2 rounded">
+                  <button className="py-2 px-2 rounded fn-btn">
                     <div className=" flex justify-start items-center">
                       <MessageOutlined style={{ fontSize: "20px" }} />
                       <span className=" text-xs mx-1 font-bold">
@@ -264,25 +261,25 @@ export default function DetailThread() {
                       </span>
                     </div>
                   </button>
-                  <button className="py-2 px-2 rounded" id="fn-btn">
+                  <button className="py-2 px-2 rounded fn-btn">
                     <div className=" flex justify-start items-center">
                       <ShareAltOutlined style={{ fontSize: "20px" }} />
                       <span className=" text-xs mx-1 font-bold">Share</span>
                     </div>
                   </button>
-                  <button className="py-2 px-2 rounded" id="fn-btn">
+                  <button className="py-2 px-2 rounded fn-btn">
                     <div className=" flex justify-start items-center">
                       <SaveOutlined style={{ fontSize: "20px" }} />
                       <span className=" text-xs mx-1 font-bold">Save</span>
                     </div>
                   </button>
-                  <button id="fn-btn" className="py-2 px-2 rounded">
+                  <button className="py-2 px-2 rounded fn-btn">
                     <div>
                       <EyeInvisibleOutlined style={{ fontSize: "20px" }} />
                       <span className=" text-xs mx-1 font-bold">Hide</span>
                     </div>
                   </button>
-                  <button id="fn-btn" className="py-2 px-2 rounded">
+                  <button className="py-2 px-2 rounded fn-btn">
                     <div>
                       <FlagOutlined style={{ fontSize: "20px" }} />
                       <span className=" text-xs mx-1 font-bold">Report</span>

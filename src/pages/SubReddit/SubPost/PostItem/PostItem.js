@@ -8,7 +8,7 @@ import {
   EllipsisOutlined,
 } from "@ant-design/icons";
 import "./PostItem.css";
-import { Carousel, Tag } from "antd";
+import { Carousel, Tag, Dropdown, Menu, Space } from "antd";
 import he from "he";
 import ReactPlayer from "react-player";
 import ReactHlsPlayer from "react-hls-player";
@@ -49,6 +49,34 @@ export default function PostItem({ postData }) {
     }
     return score;
   };
+  const commentDropdown = (
+    <Menu
+      items={[
+        {
+          key: "1",
+          label: (
+            <button className="py-2 px-2 rounded fn-btn">
+              <div className=" flex justify-start items-center">
+                <ShareAltOutlined style={{ fontSize: "20px" }} />
+                <span className=" text-xs mx-1 font-bold">Share</span>
+              </div>
+            </button>
+          ),
+        },
+        {
+          key: "2",
+          label: (
+            <button className="py-2 px-2 rounded fn-btn">
+              <div className=" flex justify-start items-center">
+                <SaveOutlined style={{ fontSize: "20px" }} />
+                <span className=" text-xs mx-1 font-bold">Save</span>
+              </div>
+            </button>
+          ),
+        },
+      ]}
+    />
+  );
   let renderPost = (post) => {
     if (post.is_video) {
       return (
@@ -57,7 +85,7 @@ export default function PostItem({ postData }) {
             src={post.media.reddit_video.hls_url}
             autoPlay={false}
             controls={true}
-            width="50%"
+            width="90%"
             height="auto"
           />
         </div>
@@ -123,7 +151,11 @@ export default function PostItem({ postData }) {
             key={index}
             className="flex justify-start items-start hover:border-gray-500 border border-white bg-white pt-2  pl-2 pr-5 my-3 rounded"
           >
-            <div style={{ backgroundColor: "#fcfcfc" }} id="post-vote">
+            <div
+              style={{ backgroundColor: "#fcfcfc" }}
+              id="post-vote"
+              className=" w-10"
+            >
               <div>
                 <button
                   id={post.id + "-upvote-btn"}
@@ -158,58 +190,53 @@ export default function PostItem({ postData }) {
               className="px-2 container w-full"
               style={{ width: "100%" }}
               id="post-header"
-              onClick={() => {
-                navigate(`/r/DotA2/comments/${getPath(post.title, post.id)}`);
-              }}
             >
+              <div className=" text-left text-sm" style={{ color: "#b0b1b3" }}>
+                <span>Posted by</span>
+                <a
+                  className="mx-1 hover:underline"
+                  href="/"
+                  style={{ color: "#b0b1b3" }}
+                >
+                  u/{post.author}
+                </a>
+                <span>
+                  {" "}
+                  {getTime(post.created_utc).hour !== "0"
+                    ? getTime(post.created_utc).hour > 24
+                      ? (getTime(post.created_utc).hour / 24).toFixed(0) +
+                        " days ago"
+                      : getTime(post.created_utc).hour + " hours ago"
+                    : getTime(post.created_utc).minute + " minutes ago"}
+                </span>
+              </div>
               <div
-                className="flex justify-start items-center text-sm"
-                style={{ color: "#b0b1b3" }}
+                onClick={() => {
+                  navigate(`/r/DotA2/comments/${getPath(post.title, post.id)}`);
+                }}
               >
                 <div>
-                  <span>Posted by</span>
+                  <div className="font-medium text-lg text-left mb-1">
+                    <span>{he.decode(post.title)}</span>
+                    <Tag color="cyan">{post.link_flair_text}</Tag>
+                  </div>
                 </div>
                 <div>
-                  <a
-                    className="mx-1 hover:underline"
-                    href="/"
-                    style={{ color: "#b0b1b3" }}
-                  >
-                    u/{post.author}
-                  </a>
-                </div>
-                <div>
-                  <span>
-                    {" "}
-                    {getTime(post.created_utc).hour !== "0"
-                      ? getTime(post.created_utc).hour > 24
-                        ? (getTime(post.created_utc).hour / 24).toFixed(0) +
-                          " days ago"
-                        : getTime(post.created_utc).hour + " hours ago"
-                      : getTime(post.created_utc).minute + " minutes ago"}
-                  </span>
-                </div>
-              </div>
-              <div>
-                <div className="font-medium text-lg text-left mb-1">
-                  <span>{he.decode(post.title)}</span>
-                  <Tag color="cyan">{post.link_flair_text}</Tag>
-                </div>
-              </div>
-              <div>
-                <div>
-                  <div id={post.id} className="overflow-hidden">
-                    {post.crosspost_parent_list
-                      ? renderPost(post.crosspost_parent_list[0])
-                      : renderPost(post)}
+                  <div>
+                    <div id={post.id} className="overflow-hidden">
+                      {post.crosspost_parent_list
+                        ? renderPost(post.crosspost_parent_list[0])
+                        : renderPost(post)}
+                    </div>
                   </div>
                 </div>
               </div>
+
               <div
-                className=" flex justify-start items-center my-2"
+                className=" hidden sm:flex justify-start items-center my-2"
                 id="post-comment"
               >
-                <button id="fn-btn" className="py-2 px-2 rounded">
+                <button className="py-2 px-2 rounded fn-btn">
                   <div className=" flex justify-start items-center">
                     <MessageOutlined style={{ fontSize: "20px" }} />
                     <span className=" text-xs mx-1 font-bold">
@@ -217,23 +244,46 @@ export default function PostItem({ postData }) {
                     </span>
                   </div>
                 </button>
-                <button className="py-2 px-2 rounded" id="fn-btn">
-                  <div className=" flex justify-start items-center">
+                <button className="py-2 px-2 rounded fn-btn">
+                  <div className=" flex justify-start items-center ">
                     <ShareAltOutlined style={{ fontSize: "20px" }} />
                     <span className=" text-xs mx-1 font-bold">Share</span>
                   </div>
                 </button>
-                <button className="py-2 px-2 rounded" id="fn-btn">
+                <button className="py-2 px-2 rounded fn-btn">
                   <div className=" flex justify-start items-center">
                     <SaveOutlined style={{ fontSize: "20px" }} />
                     <span className=" text-xs mx-1 font-bold">Save</span>
                   </div>
                 </button>
-                <button id="fn-btn" className="py-2 px-2 rounded">
+                <button className="py-2 px-2 rounded fn-btn">
                   <div>
                     <EllipsisOutlined style={{ fontSize: "20px" }} />
                   </div>
                 </button>
+              </div>
+              <div
+                className=" flex sm:hidden justify-start items-center my-2"
+                id="post-comment"
+              >
+                <button className="py-2 px-2 rounded fn-btn">
+                  <div className=" flex justify-start items-center">
+                    <MessageOutlined style={{ fontSize: "20px" }} />
+                    <span className=" text-xs mx-1 font-bold">
+                      {post.num_comments} Commnents
+                    </span>
+                  </div>
+                </button>
+                <Dropdown overlay={commentDropdown} trigger={["click"]}>
+                  <button
+                    className="py-2 px-2 rounded fn-btn"
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <Space>
+                      <EllipsisOutlined style={{ fontSize: "20px" }} />
+                    </Space>
+                  </button>
+                </Dropdown>
               </div>
             </div>
           </div>

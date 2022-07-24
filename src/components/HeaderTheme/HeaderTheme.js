@@ -76,8 +76,11 @@ export default function HeaderTheme() {
   const onSearch = (value) => console.log(value);
   return (
     <header className="w-full py-1 fixed top-0 bg-white z-10">
-      <div className=" flex items-center w-full">
-        <NavLink to={"/"} className="flex">
+      <div className=" flex items-center w-full justify-center">
+        <NavLink
+          to={"/"}
+          className="flex justify-center items-center md:mx-5 lg:mx-10"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -134,7 +137,7 @@ export default function HeaderTheme() {
           </Dropdown>
         </div>
         <div
-          className=" flex hover:border-blue-500 border border-white rounded mr-5 h-12"
+          className=" flex hover:border-blue-500 border border-white rounded h-12"
           style={{ width: "100%", backgroundColor: "#f6f7f8" }}
         >
           <div className="py-2 px-3 flex justify-center items-center">
@@ -151,37 +154,34 @@ export default function HeaderTheme() {
           />
         </div>
 
-        <div className="  items-center justify-evenly w-full hidden lg:flex">
-          <div className=" flex gap-1 justify-center items-center">
+        <div className="items-center justify-center hidden md:flex">
+          <div className=" flex justify-center items-center">
             <NavLink to={"/login"}>
               <div
-                className=" px-4 py-2 rounded-3xl w-32 font-bold cursor-pointer hover:bg-blue-50 duration-150 text-blue"
+                className=" px-2 py-2 mx-2 rounded-3xl w-28 font-bold cursor-pointer hover:bg-blue-50 duration-150 text-blue"
                 style={{ border: "1px solid #509cdf" }}
               >
                 Log in
               </div>
             </NavLink>
             <NavLink to={"/register"}>
-              <div className=" px-4 py-2 mx-4 rounded-3xl w-32 font-bold bg-blue-600 hover:bg-blue-500 text-white cursor-pointer">
+              <div className=" px-4 py-2 mx-2 rounded-3xl w-28 font-bold bg-blue-600 hover:bg-blue-500 text-white cursor-pointer">
                 Sign up
               </div>
             </NavLink>
-            <div
-              className="p-2 hover:border-gray-300 border border-white hover:rounded mx-2"
-              style={{ width: "40%" }}
-            >
-              <Dropdown overlay={menu} trigger={["click"]}>
-                <a onClick={(e) => e.preventDefault()}>
-                  <Space>
-                    <UserOutlined className="w-10 text-2xl hover:text-black" />
-                    <DownOutlined />
-                  </Space>
-                </a>
-              </Dropdown>
-            </div>
           </div>
         </div>
-        <div className="lg:hidden">
+        <div className=" hidden md:flex p-2 hover:border-gray-300 border border-white hover:rounded mr-5">
+          <Dropdown overlay={menu} trigger={["click"]}>
+            <a onClick={(e) => e.preventDefault()}>
+              <Space>
+                <UserOutlined className="w-10 text-2xl hover:text-black" />
+                <DownOutlined />
+              </Space>
+            </a>
+          </Dropdown>
+        </div>
+        <div className="md:hidden mx-2">
           <HeaderDrawer />
         </div>
       </div>

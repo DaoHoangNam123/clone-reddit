@@ -89,7 +89,7 @@ export default function SubPost() {
   }, [typePost]);
   return (
     <div>
-      <div className="container mx-auto lg:w-2/3">
+      <div className="sm:container mx-auto sm:w-3/4 lg:w-2/3">
         <InfiniteScroll
           dataLength={data.length}
           next={loadMoreData}
