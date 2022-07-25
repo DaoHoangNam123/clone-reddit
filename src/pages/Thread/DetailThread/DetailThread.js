@@ -108,7 +108,7 @@ export default function DetailThread() {
         </Carousel>
       );
     } else if (post.is_robot_indexable && post.media_embed !== {}) {
-      let el = document.getElementById(post.id);
+      let el = document.getElementById("description");
       if (el !== null) {
         if (post.media_embed.content === undefined) {
           return (
@@ -119,7 +119,11 @@ export default function DetailThread() {
         } else {
           return (
             <div className="flex justify-center items-center">
-              <ReactPlayer url={post.url} playing={false}></ReactPlayer>
+              <ReactPlayer
+                url={post.url}
+                playing={false}
+                width="80%"
+              ></ReactPlayer>
             </div>
           );
         }
