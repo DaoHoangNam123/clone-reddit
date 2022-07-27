@@ -18,6 +18,7 @@ import { useNavigate } from "react-router-dom";
 export default function PostItem({ postData }) {
   let dispatch = useDispatch();
   let navigate = useNavigate();
+  // Convert UTC millisecond from data to hour minute, second
   const getTime = (time) => {
     const postHour = new Date(time * 1000);
     const currentHour = new Date();
@@ -31,6 +32,7 @@ export default function PostItem({ postData }) {
     };
     return timePost;
   };
+  // Convert string author, title of post for navigating to thread page
   const getPath = (title, author) => {
     let stringArray = title.toLowerCase().replaceAll(" ", "_");
     let onlyLettersArray = stringArray
@@ -39,6 +41,7 @@ export default function PostItem({ postData }) {
     let path = `${author}/${onlyLettersArray.join("")}`;
     return path;
   };
+  // Convert number of vote to render
   const calVote = (vote) => {
     let score = "";
     if (vote * 1 > 1000) {
@@ -77,7 +80,10 @@ export default function PostItem({ postData }) {
       ]}
     />
   );
+
+  // Render description of post
   let renderPost = (post) => {
+    // Content is hls video
     if (post.is_video) {
       return (
         <div className="flex justify-center items-center">
@@ -90,22 +96,29 @@ export default function PostItem({ postData }) {
           />
         </div>
       );
-    } else if (post.is_reddit_media_domain && post.is_robot_indexable) {
+    }
+    // Content is image
+    else if (post.is_reddit_media_domain && post.is_robot_indexable) {
       return (
         <div className="flex justify-center items-center">
           <img src={post.url} alt="reddit image" style={{ width: "80%" }}></img>
         </div>
       );
-    } else if (post.is_self) {
+    }
+    // Content is text or table
+    else if (post.is_self) {
       let el = document.getElementById(post.id);
       if (el !== null) {
+        // convert data back to html element
         let html = he.decode(post.selftext_html);
         let newEl = `<div
         class="text-left text-ellipsis overflow-hidden"
       >${html}</div>`;
         el.innerHTML = newEl;
       }
-    } else if (post.is_gallery) {
+    }
+    // Content is gallery
+    else if (post.is_gallery) {
       let myData = Object.keys(post.media_metadata).map(
         (key) => post.media_metadata[key]
       );
@@ -115,6 +128,7 @@ export default function PostItem({ postData }) {
             return (
               <div key={index} className="justify-center items-center">
                 <img
+                  // Convert data
                   src={he.decode(item.s.u)}
                   alt="gallery image"
                   style={{ width: "400px", height: "auto" }}
@@ -124,7 +138,9 @@ export default function PostItem({ postData }) {
           })}
         </Carousel>
       );
-    } else if (post.is_robot_indexable && post.media_embed !== {}) {
+    }
+    // Content is video from youtube, link from other source
+    else if (post.is_robot_indexable && post.media_embed !== {}) {
       let el = document.getElementById(post.id);
       if (el !== null) {
         if (post.media_embed.content === undefined) {
@@ -151,6 +167,7 @@ export default function PostItem({ postData }) {
             key={index}
             className="flex justify-start items-start hover:border-gray-500 border border-white bg-white pt-2  pl-2 pr-5 my-3 rounded"
           >
+            {/* Upvote and Downvote */}
             <div
               style={{ backgroundColor: "#fcfcfc" }}
               id="post-vote"
@@ -161,6 +178,7 @@ export default function PostItem({ postData }) {
                   id={post.id + "-upvote-btn"}
                   className="rounded upvote-btn"
                   onClick={() => {
+                    // Dispatch upvote action to update data
                     dispatch(upVote(post.score, post.id));
                   }}
                 >
@@ -177,6 +195,7 @@ export default function PostItem({ postData }) {
                   id={post.id + "-downvote-btn"}
                   className="rounded downvote-btn"
                   onClick={() => {
+                    // Dispatch downvote action to update data
                     dispatch(downVote(post.score, post.id));
                   }}
                 >
@@ -191,6 +210,7 @@ export default function PostItem({ postData }) {
               style={{ width: "100%" }}
               id="post-header"
             >
+              {/* Render post header: author, time of post  */}
               <div className=" text-left text-sm" style={{ color: "#b0b1b3" }}>
                 <span>Posted by</span>
                 <a
@@ -210,6 +230,7 @@ export default function PostItem({ postData }) {
                     : getTime(post.created_utc).minute + " minutes ago"}
                 </span>
               </div>
+              {/* Post description content*/}
               <div
                 onClick={() => {
                   navigate(`/r/DotA2/comments/${getPath(post.title, post.id)}`);
@@ -231,7 +252,7 @@ export default function PostItem({ postData }) {
                   </div>
                 </div>
               </div>
-
+              {/* Function bar: comment ,save, share */}
               <div
                 className=" hidden sm:flex justify-start items-center my-2"
                 id="post-comment"
@@ -262,6 +283,7 @@ export default function PostItem({ postData }) {
                   </div>
                 </button>
               </div>
+              {/* Appears when screen size < 640px */}
               <div
                 className=" flex sm:hidden justify-start items-center my-2"
                 id="post-comment"

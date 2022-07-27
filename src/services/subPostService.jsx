@@ -2,6 +2,8 @@ import axios from "axios";
 import { BASE_URL } from "./configURL";
 
 export const subPostService = {
+  
+  // Get 25 post each time 
   getSubPostList: (searchData, newPost) => {
     return axios.get(
       `${BASE_URL}/r/${searchData}.json?count=25&after=${newPost}`

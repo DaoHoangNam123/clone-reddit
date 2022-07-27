@@ -5,7 +5,9 @@ export default function SubBanner() {
   let navigate = useNavigate();
   return (
     <div>
+      {/* Banner image */}
       <div id="banner" className=" h-80"></div>
+      {/* Dota 2 logo */}
       <div
         className=" absolute left-0 md:left-8 top-28 lg:left-16 cursor-pointer"
         onClick={() => {
@@ -14,6 +16,7 @@ export default function SubBanner() {
       >
         <img src="https://styles.redditmedia.com/t5_2s580/styles/bannerPositionedImage_98gge688vp251.png"></img>
       </div>
+      {/* Banner content */}
       <div
         id="banner-subreddit"
         className="container mx-auto lg:w-2/3 w-full relative text-left lg:px-24 py-2"

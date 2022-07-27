@@ -21,8 +21,11 @@ import he from "he";
 import ReactPlayer from "react-player";
 import ReactHlsPlayer from "react-hls-player";
 export default function DetailThread() {
+  // get Thread data for comment number from reducer
   const threadData = useSelector((state) => state.subReducer.threadData);
   const [thread, setThread] = useState({});
+
+  // Convert UTC millisecond from data to hour minute, second
   const getTime = (time) => {
     const postHour = new Date(time * 1000);
     const currentHour = new Date();
@@ -37,7 +40,9 @@ export default function DetailThread() {
     return timePost;
   };
   let dispatch = useDispatch();
-  let id = useParams();
+  // Get detail of thread path: id and title
+  let threadPath = useParams();
+  // Calculate vote number
   const calVote = (vote) => {
     let score = "";
     if (vote * 1 > 1000) {
@@ -49,14 +54,17 @@ export default function DetailThread() {
     return score;
   };
   useEffect(() => {
+    // Call axios to get thread data
     let fetchData = async () => {
-      let result = await threadService.getThread(`${id.id}/${id.title}`);
+      let result = await threadService.getThread(`${threadPath.id}/${threadPath.title}`);
       dispatch(getThread(result.data[0].data.children[0].data));
       setThread(result.data[0].data.children[0].data);
     };
     fetchData();
   }, []);
+  // Render description of thread
   let renderPost = (post) => {
+    // Content is hls video
     if (post.is_video) {
       return (
         <div className="flex justify-center items-center">
@@ -69,7 +77,9 @@ export default function DetailThread() {
           />
         </div>
       );
-    } else if (
+    }
+    // Content is image
+    else if (
       post.is_reddit_media_domain &&
       post.is_robot_indexable &&
       !post.is_self
@@ -79,7 +89,9 @@ export default function DetailThread() {
           <img src={post.url} alt={`${post.id} reddit`}></img>;
         </div>
       );
-    } else if (post.is_self) {
+    }
+    // Content is text or table
+    else if (post.is_self) {
       let el = document.getElementById("description");
       if (el !== null) {
         let html = he.decode(post.selftext_html);
@@ -88,7 +100,9 @@ export default function DetailThread() {
         >${html}</div>`;
         el.innerHTML = newEl;
       }
-    } else if (post.is_gallery) {
+    }
+    // Content is gallery
+    else if (post.is_gallery) {
       let myData = Object.keys(post.media_metadata).map(
         (key) => post.media_metadata[key]
       );
@@ -107,7 +121,9 @@ export default function DetailThread() {
           })}
         </Carousel>
       );
-    } else if (post.is_robot_indexable && post.media_embed !== {}) {
+    }
+    // Content is video from youtube, link from other source
+    else if (post.is_robot_indexable && post.media_embed !== {}) {
       let el = document.getElementById("description");
       if (el !== null) {
         if (post.media_embed.content === undefined) {
@@ -135,9 +151,11 @@ export default function DetailThread() {
     <div>
       <div id="thread-header" className="bg-black text-white h-max">
         <div className="container lg:w-2/3 w-full mx-auto flex justify-start items-center py-2">
+          {/* Upvote and Downvote */}
           <div className="flex justify-start items-center">
             <button
               className="rounded upvote-btn"
+              // Dispatch upvote action to update thread data
               onClick={() => {
                 dispatch(upVote(threadData.score, thread.id));
               }}
@@ -154,6 +172,7 @@ export default function DetailThread() {
             <button
               className="rounded downvote-btn"
               onClick={() => {
+                // Dispatch downvote action to update thread data
                 dispatch(downVote(threadData.score, thread.id));
               }}
             >
@@ -162,6 +181,7 @@ export default function DetailThread() {
               </span>
             </button>
           </div>
+          {/* Thread title */}
           <div className="mx-4">
             <div className=" flex flex-col md:flex-row justify-center items-start w-full">
               <span className="text-base font-bold text-left">
@@ -182,11 +202,13 @@ export default function DetailThread() {
             className="rounded border-gray-300 mx-auto lg:w-2/3 w-full bg-white"
           >
             <div className="flex justify-start items-star bg-white p-2 my-3 rounded">
+              {/* Upvote and Downvote */}
               <div id="post-vote">
                 <div>
                   <button
                     className="rounded upvote-btn"
                     onClick={() => {
+                      // Dispatch upvote action to update thread data
                       dispatch(upVote(threadData.score, thread.id));
                     }}
                   >
@@ -202,6 +224,7 @@ export default function DetailThread() {
                   <button
                     className="rounded downvote-btn"
                     onClick={() => {
+                      // Dispatch downvote action to update thread data
                       dispatch(downVote(threadData.score, thread.id));
                     }}
                   >
@@ -211,11 +234,13 @@ export default function DetailThread() {
                   </button>
                 </div>
               </div>
+
               <div
                 className="px-2 container"
                 style={{ width: "100%" }}
-                id="post-header"
+                id="post-content"
               >
+                {/* Post header  */}
                 <div
                   className="text-sm w-full text-left"
                   style={{ color: "#b0b1b3" }}
@@ -244,15 +269,18 @@ export default function DetailThread() {
                     <Tag color="cyan">{thread.link_flair_text}</Tag>
                   </div>
                 </div>
+                {/* Post description */}
                 <div>
                   <div>
                     <div id="description">
+                      {/* Check thread content is from post list */}
                       {thread.crosspost_parent_list
                         ? renderPost(thread.crosspost_parent_list[0])
                         : renderPost(thread)}
                     </div>
                   </div>
                 </div>
+                {/* Function button bar: comment share save button */}
                 <div
                   className=" flex flex-wrap justify-start items-center my-2"
                   id="post-comment"
@@ -290,6 +318,7 @@ export default function DetailThread() {
                     </div>
                   </button>
                 </div>
+                {/* CTA for sign in or sign up */}
                 <div className="rounded border-gray-300 border py-4 px-3">
                   <div className="flex flex-col md:flex-row justify-between items-center">
                     <div>

@@ -20,6 +20,7 @@ export default function SubList() {
   const dispatch = useDispatch();
   useEffect(() => {
     let buttons = document.querySelectorAll("#sort-bar button#sort-btn");
+    // change style of sort button
     buttons.forEach((button) => {
       button.addEventListener("click", () => {
         let activeButton = document.getElementsByClassName("active");
@@ -117,6 +118,7 @@ export default function SubList() {
             <button
               id="sort-btn"
               className="flex rounded-2xl justify-center items-center py-1 px-4 default"
+              // Dispatch action to render hot subreddit post
               onClick={() => {
                 dispatch(getHotPost());
               }}
@@ -127,7 +129,8 @@ export default function SubList() {
             <button
               id="sort-btn"
               className="flex rounded-2xl justify-center items-center py-1 px-4 mx-2"
-              onClick={(event) => {
+              onClick={() => {
+                // Dispatch action to render new subreddit post
                 dispatch(getNewPost());
               }}
             >
@@ -137,7 +140,8 @@ export default function SubList() {
             <button
               id="sort-btn"
               className="flex rounded-2xl justify-center items-center py-1 px-4"
-              onClick={(event) => {
+              onClick={() => {
+                // Dispatch action to render top subreddit post
                 dispatch(getTopPost());
               }}
             >
@@ -167,6 +171,7 @@ export default function SubList() {
           </div>
         </div>
       </div>
+      {/* Appears when screen size < 640px */}
       <div className="container rounded border-gray-300 border mx-auto sm:hidden sm:w-3/4 lg:2/3 bg-white p-5 ">
         <div id="sort-bar" className="flex justify-between items-center">
           <button
@@ -195,6 +200,7 @@ export default function SubList() {
           </div>
         </div>
       </div>
+      {/* Main subreddit post list */}
       <SubPost />
     </div>
   );

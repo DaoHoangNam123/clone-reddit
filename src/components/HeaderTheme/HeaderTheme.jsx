@@ -1,13 +1,7 @@
 import React from "react";
 import "./header.css";
-import {
-  AudioOutlined,
-  GlobalOutlined,
-  RightOutlined,
-  SearchOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
-import { DownOutlined, SmileOutlined } from "@ant-design/icons";
+import { RightOutlined, SearchOutlined, UserOutlined } from "@ant-design/icons";
+import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Menu, Space, Input, Tag } from "antd";
 import { NavLink } from "react-router-dom";
 import HeaderDrawer from "./Drawer/HeaderDrawer";
@@ -73,10 +67,10 @@ const categories = (
   />
 );
 export default function HeaderTheme() {
-  const onSearch = (value) => console.log(value);
   return (
     <header className="w-full py-1 fixed top-0 bg-white z-10">
       <div className=" flex items-center w-full justify-center">
+        {/* Logo Reddit */}
         <NavLink
           to={"/"}
           className="flex justify-center items-center md:mx-5 lg:mx-10"
@@ -110,6 +104,7 @@ export default function HeaderTheme() {
             </g>
           </svg>
         </NavLink>
+        {/* Current search thread dropdown */}
         <div
           className="p-2 hover:border-gray-300 border border-white hover:rounded mx-2 hidden lg:block"
           style={{ width: "40%" }}
@@ -136,6 +131,8 @@ export default function HeaderTheme() {
             </a>
           </Dropdown>
         </div>
+
+        {/* Search bar */}
         <div
           className=" flex hover:border-blue-500 border border-white rounded h-12"
           style={{ width: "100%", backgroundColor: "#f6f7f8" }}
@@ -154,6 +151,7 @@ export default function HeaderTheme() {
           />
         </div>
 
+        {/* Appears when screen size > 768 */}
         <div className="items-center justify-center hidden md:flex">
           <div className=" flex justify-center items-center">
             <NavLink to={"/login"}>
@@ -181,6 +179,7 @@ export default function HeaderTheme() {
             </a>
           </Dropdown>
         </div>
+        {/* Appears when screen size <= 768 */}
         <div className="md:hidden mx-2">
           <HeaderDrawer />
         </div>

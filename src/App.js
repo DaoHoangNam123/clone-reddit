@@ -14,6 +14,8 @@ function App() {
             path="/"
             element={<LayoutTheme component={<SubReddit />} />}
           ></Route>
+
+          {/* Route to each reddit thread */}
           <Route
             path="/r/DotA2/comments/:id/:title"
             element={<LayoutTheme component={<Thread />} />}
