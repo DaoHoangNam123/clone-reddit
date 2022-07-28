@@ -94,24 +94,47 @@ export const subReducer = (state = initialState, { type, payload }) => {
       let index = cloneData.findIndex((post) => {
         return post.id === payload.postId;
       });
-      // Check lastScore value of post is existed
-      if (!cloneData[index].lastScore) {
-        // Add lastScore value to data for calculating new vote score
-        // lastScore ==== current vote
-        cloneData[index] = {
-          ...cloneData[index],
-          lastScore: cloneData[index].score,
-        };
-        // vote + 1
-        cloneData[index].score += 1;
-      } else {
-        // User clicked downvote before clicked upvote
-        if (cloneData[index].score - cloneData[index].lastScore < 0) {
-          // vote + 2
-          cloneData[index].score += 2;
+      if (index !==-1)
+      {
+          // Check lastScore value of post is existed
+          if (!cloneData[index].lastScore) {
+            // Add lastScore value to data for calculating new vote score
+            // lastScore ==== current vote
+            cloneData[index] = {
+              ...cloneData[index],
+              lastScore: cloneData[index].score,
+            };
+            // vote + 1
+            cloneData[index].score += 1;
+          } else {
+            // User clicked downvote before clicked upvote
+            if (cloneData[index].score - cloneData[index].lastScore < 0) {
+              // vote + 2
+              cloneData[index].score += 2;
+            }
+          }
+          cloneThreadData.score = cloneData[index].score;
+      }
+      else 
+      {
+        // Check lastScore value of post is existed
+        if (!cloneThreadData.lastScore) {
+          // Add lastScore value to data for calculating new vote score
+          // lastScore ==== current vote
+          cloneThreadData = {
+            ...cloneThreadData,
+            lastScore: cloneThreadData.score,
+          };
+          // vote + 1
+          cloneThreadData.score += 1;
+        } else {
+          // User clicked downvote before clicked upvote
+          if (cloneThreadData.score - cloneThreadData.lastScore < 0) {
+            // vote + 2
+            cloneThreadData.score += 2;
+          }
         }
       }
-      cloneThreadData.score = cloneData[index].score;
       state.threadData = cloneThreadData;
       state.data = cloneData;
       return { ...state };
@@ -124,6 +147,8 @@ export const subReducer = (state = initialState, { type, payload }) => {
       let index = cloneData.findIndex((post) => {
         return post.id === payload.postId;
       });
+      if (index !==-1)
+      {
       // Check lastScore value of post is existed
       if (!cloneData[index].lastScore) {
         // Add lastScore value to data for calculating new vote score
@@ -142,6 +167,27 @@ export const subReducer = (state = initialState, { type, payload }) => {
         }
       }
       cloneThreadData.score = cloneData[index].score;
+    }
+      else
+      {
+        // Check lastScore value of post is existed
+        if (!cloneThreadData.lastScore) {
+          // Add lastScore value to data for calculating new vote score
+          // lastScore ==== current vote
+          cloneThreadData = {
+            ...cloneThreadData,
+            lastScore: cloneThreadData.score,
+          };
+          // vote - 1
+          cloneThreadData.score -= 1;
+        } else {
+           // User clicked upvote before clicked downvote
+          if (cloneThreadData.score - cloneThreadData.lastScore > 0) {
+            // vote - 2
+            cloneThreadData.score -= 2;
+          }
+        }
+      }
       state.threadData = cloneThreadData;
       state.data = cloneData;
       return { ...state };
